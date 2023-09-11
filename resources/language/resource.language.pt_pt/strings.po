@@ -78,6 +78,14 @@ msgctxt "#30019"
 msgid "SSL connection"
 msgstr "Conexão SSL"
 
+msgctxt "#30020"
+msgid "Utilizador"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Senha"
+msgstr ""
+
 msgctxt "#30031"
 msgid "Session saving frequency (seconds)"
 msgstr "Frequência de gravação da sessão (segundos)"

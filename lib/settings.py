@@ -45,6 +45,10 @@ def get_service_address():
     return "127.0.0.1" if service_enabled() else get_setting("service_address")
 
 
+def get_credentials():
+    return get_setting("auth_username"), get_setting("auth_password")
+
+
 def download_after_insert():
     return get_boolean_setting("download_after_insert")
 

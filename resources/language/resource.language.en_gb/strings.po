@@ -78,6 +78,14 @@ msgctxt "#30019"
 msgid "SSL connection"
 msgstr ""
 
+msgctxt "#30020"
+msgid "Username"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Password"
+msgstr ""
+
 msgctxt "#30031"
 msgid "Session saving frequency (seconds)"
 msgstr ""

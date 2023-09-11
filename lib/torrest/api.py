@@ -81,8 +81,12 @@ class TorrestError(Exception):
 
 
 class Torrest(object):
-    def __init__(self, host, port, ssl_enabled=False, session=None):
-        self._base_url = "{}://{}:{}".format("https" if ssl_enabled else "http", host, port)
+    def __init__(self, host, port, credentials, ssl_enabled=False, session=None):
+        self.host = host
+        self.port = port
+        self.username, self.password = credentials
+        self.ssl_enabled = ssl_enabled
+        self._base_url = "{}://{}:{}".format("https" if self.ssl_enabled else "http", self.host, self.port)
         self._session = session or requests
 
     def add_magnet(self, magnet, ignore_duplicate=False, download=False):
@@ -172,7 +176,8 @@ class Torrest(object):
         self._put("/torrents/{}/files/{}/stop".format(info_hash, file_id))
 
     def serve_url(self, info_hash, file_id):
-        return "{}/torrents/{}/files/{}/serve".format(self._base_url, info_hash, file_id)
+        base_url= "{}://{}:{}".format("https" if self.ssl_enabled else "http", f"{self.username}:{self.password}@{self.host}", self.port)
+        return "{}/torrents/{}/files/{}/serve".format(base_url, info_hash, file_id)
 
     @staticmethod
     def _bool_str(value):
@@ -191,7 +196,7 @@ class Torrest(object):
         return self._request("delete", url, **kwargs)
 
     def _request(self, method, url, validate=True, **kwargs):
-        r = self._session.request(method, self._base_url + url, **kwargs)
+        r = self._session.request(method, self._base_url + url, auth=(self.username, self.password),**kwargs)
         if validate and r.status_code >= 400:
             error = r.json()["error"]
             raise TorrestError(error)
